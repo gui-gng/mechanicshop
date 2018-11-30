@@ -6,9 +6,12 @@ const applicationController = require('../controllers').Application;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { page: 'pages/home' });
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('index', { page: 'pages/login' });
+});
 
 //routesUser
 router.get('/api/user', userController.list);

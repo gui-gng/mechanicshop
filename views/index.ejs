@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+      <% include ./partials/headers.ejs %>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+      <% include ./partials/navbar.ejs %>
+    
+    <%- include(page) %>
   </body>
 </html>
