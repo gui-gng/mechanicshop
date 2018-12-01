@@ -6,9 +6,9 @@ const axios = require('axios');
 router.get('/login', function(req, res, next) {
     console.log(req.sessionID);
     if(req.isAuthenticated()){
-        res.render('index', { page: 'pages/home' });
+        res.redirect('/');
     } else {
-        res.render('index', { page: 'pages/login' });
+        res.render('index', { page: 'pages/login',navbar: 'partials/navbar'  });
     }
 });
 
@@ -22,7 +22,7 @@ router.post('/login', (req, res, next) => {
             console.log('<><><><,Login failed');
             console.log(">>>>>>>>>err: " + err);
             console.log(">>>>>>>>>info:" + info);
-            return res.send({"data": "Fail"});
+            return res.send({"status": "Fail", "message": "Invalid username or password"});
             res.render('index', { page: 'pages/login' });
             return ;
         }
@@ -37,7 +37,7 @@ router.post('/login', (req, res, next) => {
         console.log('req.session.passport:' + JSON.stringify(req.session.passport));
         console.log('req.user:' + JSON.stringify(req.user));
         //return res.render("test");
-        return res.send({"data": "Success"});
+        return res.send({"status": "Success"});
         return res.send('You were authenticated & logged in!\n');
       })
     })(req, res, next);

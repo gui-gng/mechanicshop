@@ -6,7 +6,12 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   console.log('Inside the homepage callback function')
   console.log(req.sessionID);
-  res.render('index', { page: 'pages/home' });
+  if(req.isAuthenticated()){
+    res.render('index', { page: 'private/home',navbar: 'private/navbar' });
+  } else {
+    res.render('index', { page: 'pages/home',navbar: 'partials/navbar' });
+  }
+
 });
 
 

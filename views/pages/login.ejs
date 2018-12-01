@@ -43,6 +43,7 @@
         <script>
                 $(document).ready(function(){
                   var user,pass;
+
                   $("#submit").click(function(){
                     user=$("#user").val();
                     pass=$("#password").val();
@@ -50,10 +51,17 @@
                     $.post("http://localhost:5000/login",{username: user,password: pass}, function(data){
                       if(data)
                         {
-                            alert("Have data");
-                            alert(data);
+                            var status = JSON.stringify(data);
+                           
+                            if(data.status == "Success")
+                            {
+                                window.location = "/";
+                            } else {
+                                alert(data.message);
+                            }
+                            
                         }else {
-                            window.location = "/";
+                            alert("Error connect server")
                         }
                     });
                    
