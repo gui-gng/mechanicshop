@@ -1,28 +1,18 @@
-<div class="container">
-        <div class="row text-center mb-4">
-            <div class="col-md-12">
-                <h4>Prestashop</h4>
-                <small>1.6.1.19</small>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-6 offset-md-3">
-                <div class="card">
+        <div class="row text-center align-items-center h-100">
+            <div class="col mx-auto">
+                <div class="card mx-auto" style="width: 18rem;">
                     <div class="card-body">
-                        <div class="login-img">
-                            <img src="https://demos6.softaculous.com/PrestaShop/img/preston-login@2x.png">
-                        </div>
                         <div class="login-title">
                             <h4>Log In</h4>
                         </div>
                         <div class="login-form mt-4">
-                            <form>
+                            
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                  <input id="email" name="Full Name" placeholder="Email Address" class="form-control" type="text">
+                                  <input id="user" name="user" placeholder="Email Address or Username" class="form-control" type="text">
                                 </div>
                                 <div class="form-group col-md-12">
-                                  <input type="pass" class="form-control" id="pass" placeholder="Password">
+                                  <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                                 </div>
                               </div>
                              <div class="form-row">
@@ -38,9 +28,9 @@
                         </div>                        
                             
                             <div class="form-row">
-                                <button type="button" class="btn btn-danger btn-block">Submit</button>
+                                <button id="submit" type="button" class="btn btn-danger btn-block">Submit</button>
                             </div>
-                        </form>
+                        
                         </div>
                         <div class="logi-forgot text-right mt-2">
                             <a href="#">Reset Password </a>
@@ -49,4 +39,49 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <script>
+                $(document).ready(function(){
+                  var user,pass;
+                  $("#submit").click(function(){
+                    user=$("#user").val();
+                    pass=$("#password").val();
+                    
+                    $.post("http://localhost:5000/login",{username: user,password: pass}, function(data){
+                      if(data)
+                        {
+                            alert("Have data");
+                            alert(data);
+                        }else {
+                            window.location = "/";
+                        }
+                    });
+                   
+                        
+/*
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:5000/api/auth",
+                        data: JSON.stringify({username: user,password: pass}),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            if(data)
+                            {
+                                    alert(data);
+                            }else {
+                                window.location = "/";
+                            }
+                        },
+                        failure: function(errMsg) {
+                            alert(errMsg);
+                        }
+                        
+                    });
+                     */
+
+
+                  });
+
+                });
+              </script>
