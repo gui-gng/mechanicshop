@@ -51,9 +51,10 @@ passport.use(new LocalStrategy({
         password: password
       })
     .then(response => {
+      console.log(">>>>> Response Data: " + JSON.stringify(response.data));
       //console.log(response.data.url);
       //console.log(response.data.explanation);
-      return done(null, user);
+      return done(null, response.data);
     })
     .catch(error => {
       if(error){

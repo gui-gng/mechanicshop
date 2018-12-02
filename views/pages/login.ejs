@@ -44,9 +44,14 @@
                 $(document).ready(function(){
                   var user,pass;
 
+
                   $("#submit").click(function(){
                     user=$("#user").val();
                     pass=$("#password").val();
+                    $('#submit').prop('disabled', true);
+                    $('#submit').html("Loading...");
+                    $('#submit').addClass("pulse animated infinite");
+                    
                     
                     $.post("http://localhost:5000/login",{username: user,password: pass}, function(data){
                       if(data)
@@ -57,6 +62,9 @@
                             {
                                 window.location = "/";
                             } else {
+                                $('#submit').removeClass("pulse animated infinite");
+                                $('#submit').prop('disabled', false);
+                                $('#submit').html("Submit");
                                 alert(data.message);
                             }
                             
