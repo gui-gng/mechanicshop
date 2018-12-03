@@ -10,75 +10,82 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const axios = require('axios');
-
+var CryptoJS = require("crypto-js");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 
 var user = require('./models/user');
-/*
-// configure passport.js to use the local strategy
-passport.use(new LocalStrategy(
-  (username, password, done) => {
-    console.log('Inside local strategy callback')
-    const user = User
-    .findOne({ where: {[Op.and]: [{username: username}, {userpw: password}]} })
-    .then((user) => {
-      console.log("----------------Reading DB-------------------");
-      console.log("Username: " + user.username);
-      return user;
-    });
-    //const user = users[0] 
-    if(username === user.username && password === user.userpw) {
-      console.log('Local strategy returned true')
-      return done(null, user)
-    }
-  }
-));
-*/
-
 
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password'
 },
   function(username, password, done) {
-    console.log("------------SET Strategy-------");
-    var user  = {username: username, password: password};
+   // console.log("------------SET Strategy-------");
+    var hashPW = CryptoJS.SHA256(password).toString();
+    //console.log(">>>>>>>>>> Crypto Password: " + hashPW);
+    var user  = {username: username, password: hashPW};
     axios.post('http://localhost:5000/api/auth', {
-        username: username,
-        password: password
+        username: user.username,
+        password: user.password
       })
     .then(response => {
-      console.log(">>>>> Response Data: " + JSON.stringify(response.data));
-      //console.log(response.data.url);
-      //console.log(response.data.explanation);
+      //console.log(">>>>> Response Data: " + JSON.stringify(response.data));
       return done(null, response.data);
     })
     .catch(error => {
       if(error){
         //console.log(error);
         if(error.response.status == "401"){
-          
           console.log("User denied");
           return done(null, null);
-
         }
       }
       
     });
-    /*
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-      return done(null, user);
-    });
-    */
   }
 ));
 
+
+
+passport.use(new FacebookStrategy({
+  clientID: 306513316657583,
+  clientSecret: "3b154f484bd2bc4e4142f7b3431b09b1",
+  callbackURL: "http://localhost:5000/auth/facebook/callback",
+  profileFields: ['id', 'displayName', 'photos', 'email']
+},
+function(accessToken, refreshToken, profile, cb) {
+  
+  /*
+  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+  */
+  var names = profile.displayName;
+  var firstname, lastname = "";
+  if(names.search(" ") > 0){
+    var firstname = names.substring(0, names.search(" "));
+    var lastname = names.substring(names.search(" ") + 1);
+  }else{
+    firstname = names;
+  }
+  
+
+
+ user = {
+  "username":profile.id,
+  "user_firstname":firstname,
+  "user_lastname":lastname,
+  "user_email":profile.emails[0].value,
+  "photo":profile.photos[0].value
+}
+console.log(">>>>>>>>>>>>>>>>>>>>>>Facebook profile: " + JSON.stringify(user));
+ return cb(user);
+}
+));
 
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {

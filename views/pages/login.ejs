@@ -16,29 +16,32 @@
                                 </div>
                               </div>
                              <div class="form-row">
-                            <div class="form-group">
-                                    <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="updatecheck1">
-                                      <label class="form-check-label" for="updatecheck1">
-                                        <small>By submitting this form you agree to our <a href="#">terms and conditions </a> </small>
-                                        
-                                      </label>
-                                    </div>
-                                  </div>
-                        </div>                        
+                          
+                            </div>                        
                             
                             <div class="form-row">
                                 <button id="submit" type="button" class="btn btn-danger btn-block">Submit</button>
                             </div>
+                            
+
+                            <div class="form-row">
+                                <button id="submitCreate" type="button" class="btn btn-warning btn-block">Create</button>
+                            </div>
+
+                            <fb:login-button 
+                            scope="public_profile,email"
+                            onlogin="checkLoginState();">
+                            </fb:login-button>
                         
                         </div>
-                        <div class="logi-forgot text-right mt-2">
-                            <a href="#">Reset Password </a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
+
+        <div id="resultFB"> </div>
+        <div id="resultFB2"> </div>
 
         <script>
                 $(document).ready(function(){
@@ -72,32 +75,45 @@
                             alert("Error connect server")
                         }
                     });
-                   
-                        
-/*
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost:5000/api/auth",
-                        data: JSON.stringify({username: user,password: pass}),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(data){
-                            if(data)
-                            {
-                                    alert(data);
-                            }else {
-                                window.location = "/";
-                            }
-                        },
-                        failure: function(errMsg) {
-                            alert(errMsg);
-                        }
-                        
-                    });
-                     */
-
 
                   });
 
                 });
               </script>
+
+              
+    <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '306513316657583',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v3.2'
+          });
+            
+          FB.AppEvents.logPageView(); 
+          
+          FB.getLoginStatus(function(response) {
+            $("#resultFB").html(JSON.stringify(response));
+            //{"status":"not_authorized"}
+        });
+
+        function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            $("#resultFB2").html(JSON.stringify(response));
+        });
+        }
+            
+        };
+      
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "https://connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+
+
+         
+      </script>

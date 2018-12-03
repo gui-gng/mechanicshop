@@ -2,11 +2,19 @@
 <html>
   <head>
       <% include ./partials/headers.ejs %>
+
+      <script>
+          $(document).ready(function() {
+            $('a.active').removeClass('active');
+            $('a[href="' + location.pathname + '"]').addClass('active'); 
+          });
+        </script>
   </head>
   <body>
       <%- include(navbar) %>
     <div class="container-fluid pt-5 h-100 position-absolute">
       <%- include(page) %>
     </div>
+   
   </body>
 </html>

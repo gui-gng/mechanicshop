@@ -52,6 +52,16 @@ router.post('/login', (req, res, next) => {
     }
   });
 
+  router.get('/auth/facebook', passport.authenticate('facebook'));
+
+  router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
 
   router.get('/logout', (req, res) => {
     req.session.destroy();
