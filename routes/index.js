@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   console.log('Inside the homepage callback function')
   console.log(req.sessionID);
   if(req.isAuthenticated()){
+    console.log('---req.session:'+ JSON.stringify(req.session));
     res.render('index', { page: 'private/home',navbar: 'private/navbar' });
   } else {
     res.render('index', { page: 'pages/home',navbar: 'partials/navbar' });

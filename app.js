@@ -73,7 +73,7 @@ function(accessToken, refreshToken, profile, cb) {
     firstname = names;
   }
   
-
+  console.log(">>>>>>>>>>>>>>>>>>>>>>Facebook profile: " + JSON.stringify(profile));
 
  user = {
   "username":profile.id,
@@ -82,7 +82,7 @@ function(accessToken, refreshToken, profile, cb) {
   "user_email":profile.emails[0].value,
   "photo":profile.photos[0].value
 }
-console.log(">>>>>>>>>>>>>>>>>>>>>>Facebook profile: " + JSON.stringify(user));
+console.log(">>>>>>>>>>>>>>>>>>>>>>user Facebook: " + JSON.stringify(user));
  return cb(user);
 }
 ));
