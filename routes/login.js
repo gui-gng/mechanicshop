@@ -17,7 +17,6 @@ router.post('/login', (req, res, next) => {
     console.log('-------Inside POST /login callback');
     
     passport.authenticate('local', (err, user, info) => {
-
         if(!user){
             console.log('<><><><,Login failed');
             console.log(">>>>>>>>>err: " + err);
