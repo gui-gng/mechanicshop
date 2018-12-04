@@ -1,14 +1,58 @@
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Item 1</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Item 2</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Item 3</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Item 4</a>
-    </li>
-  </ul>  
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark pb-0 pt-0 pr-0">
+    <a class="navbar-brand showMenu" href="#">MS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        
+      </div>
+      <div class="navbar-nav bg-light text-dark">
+        <div class="">
+            <img class="rounded-circle-right" src="<%= photoPath %>"></img>
+       </div>
+        <a class="nav-item nav-link fa fa-sign-out text-dark m-auto" href="/logout"></a>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <div class="position-fixed bg-light lateralMenu fadeInLeft">
+    <ul class="d-none list-group">
+      <li class="list-group-item border-0 bg-transparent text-center"><b>App 1</b></li>
+      <a href="/dashboard" class="list-group-item text-dark border-0 bg-transparent">Dashboards</a>
+      <a href="/forms" class="list-group-item text-dark border-0 bg-transparent">Forms</a>
+      <a href="/historic" class="list-group-item text-dark border-0 bg-transparent">Historic</a>
+      <a href="/contacts" class="list-group-item text-dark border-0 bg-transparent">Contacts List</a>
+      <a href="/settings" class="list-group-item text-dark border-0 bg-transparent">Settings</a>
+    </ul>
+  </div>
+
+
+<script>
+
+$(".showMenu").on('click',
+function(){
+  $('.lateralMenu .list-group').removeClass('d-none');
+  $('.lateralMenu').addClass('animated');
+}
+);
+</script>
+
+  <!--
+
+    (---Nav left--)
+    Application name
+    ___________________
+    Dashboards
+    Forms
+    --Form1
+    --Form2
+    Historic
+    Contacts List
+    Parts search
+    Settings
+
+  -->

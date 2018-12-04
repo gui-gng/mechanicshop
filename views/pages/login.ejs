@@ -23,16 +23,9 @@
                                 <button id="submit" type="button" class="btn btn-danger btn-block">Submit</button>
                             </div>
                             
-
                             <div class="form-row">
-                                <button id="submitCreate" type="button" class="btn btn-warning btn-block">Create</button>
+                                <a href="/auth/facebook/" class="btn btn-block fa fa-facebook"></a>    
                             </div>
-
-                            <fb:login-button 
-                            scope="public_profile,email"
-                            onlogin="checkLoginState();">
-                            </fb:login-button>
-                        
                         </div>
                         
                     </div>
@@ -40,9 +33,7 @@
             </div>
         </div>
 
-        <div id="resultFB"> </div>
-        <div id="resultFB2"> </div>
-
+       
         <script>
                 $(document).ready(function(){
                   var user,pass;
@@ -82,38 +73,3 @@
               </script>
 
               
-    <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '306513316657583',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v3.2'
-          });
-            
-          FB.AppEvents.logPageView(); 
-          
-          FB.getLoginStatus(function(response) {
-            $("#resultFB").html(JSON.stringify(response));
-            //{"status":"not_authorized"}
-        });
-
-        function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            $("#resultFB2").html(JSON.stringify(response));
-        });
-        }
-            
-        };
-      
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "https://connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-
-
-         
-      </script>

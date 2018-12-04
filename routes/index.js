@@ -8,11 +8,11 @@ router.get('/', function(req, res, next) {
   console.log(req.sessionID);
   if(req.isAuthenticated()){
     console.log('---req.session:'+ JSON.stringify(req.session));
-    res.render('index', { page: 'private/home',navbar: 'private/navbar' });
+    var photoPath = req.session.passport.user.photo;
+    res.render('index', { page: 'private/home',navbar: 'private/navbar', photoPath: photoPath });
   } else {
     res.render('index', { page: 'pages/home',navbar: 'partials/navbar' });
   }
-
 });
 
 

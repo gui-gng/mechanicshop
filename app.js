@@ -83,20 +83,20 @@ function(accessToken, refreshToken, profile, cb) {
   "photo":profile.photos[0].value
 }
 console.log(">>>>>>>>>>>>>>>>>>>>>>user Facebook: " + JSON.stringify(user));
- return cb(user);
+ return cb(null, user);
 }
 ));
 
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback. User id is save to the session file store here')
-  console.log(JSON.stringify(user));
+  //console.log('Inside serializeUser callback. User id is save to the session file store here')
+  //console.log(JSON.stringify(user));
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('Inside deserializeUser callback')
-  console.log("The user id passport saved in the session file store is:" + JSON.stringify(user))
+  //console.log('Inside deserializeUser callback')
+  //console.log("The user id passport saved in the session file store is:" + JSON.stringify(user))
   //const user = 1;//sers[0].id === id ? users[0] : false; 
   done(null, user);
 });
