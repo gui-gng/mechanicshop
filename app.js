@@ -24,16 +24,13 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 },
   function(username, password, done) {
-   // console.log("------------SET Strategy-------");
     var hashPW = CryptoJS.SHA256(password).toString();
-    //console.log(">>>>>>>>>> Crypto Password: " + hashPW);
     var user  = {username: username, password: hashPW};
     axios.post('http://localhost:5000/api/auth', {
         username: user.username,
         password: user.password
       })
     .then(response => {
-      //console.log(">>>>> Response Data: " + JSON.stringify(response.data));
       return done(null, response.data);
     })
     .catch(error => {
@@ -59,11 +56,6 @@ passport.use(new FacebookStrategy({
 },
 function(accessToken, refreshToken, profile, cb) {
   
-  /*
-  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-  */
   var names = profile.displayName;
   var firstname, lastname = "";
   if(names.search(" ") > 0){
