@@ -15,11 +15,9 @@ router.get('/', function(req, res, next) {
   }
 });
 
-
 router.get('/features', function(req, res, next) {
   res.render('index', { page: 'pages/features',navbar: 'partials/navbar' });
 });
-
 
 router.get('/pricing', function(req, res, next) {
   res.render('index', { page: 'pages/pricing',navbar: 'partials/navbar' });

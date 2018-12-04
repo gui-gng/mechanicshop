@@ -1,3 +1,24 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+      <% include ./partials/headers.ejs %>
+  </head>
+  <body>
+    <% include ./partials/navbar.ejs %>
+    <div class="container-fluid pt-5 h-100 position-absolute">
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="display-2"><%= message %></h1>
+            </div>   
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="display-4"><%= error.status %></h1>
+            </div>
+        </div>
+    
+    <!--<pre><%= error.stack %></pre> -->
+    </div>
+    
+  </body>
+</html>

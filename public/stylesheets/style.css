@@ -22,7 +22,10 @@
     top: 50px;
     height:100%;
 }
-
+#container_menu{
+    background: url('/images/bg-menu.jpg');
+    background-size: cover;
+}
 .lateralMenu .list-group{
     
 }

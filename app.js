@@ -31,7 +31,14 @@ passport.use(new LocalStrategy({
         password: user.password
       })
     .then(response => {
-      return done(null, response.data);
+      user = {
+        "username":response.data.id,
+        "user_firstname":response.data.user_firstname,
+        "user_lastname":response.data.user_lastname,
+        "user_email":response.data.user_email,
+        "photo":"/images/users/" + response.data.id + "/profile.jpg"
+      }
+      return done(null, user);
     })
     .catch(error => {
       if(error){
