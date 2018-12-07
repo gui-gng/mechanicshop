@@ -38,10 +38,11 @@ module.exports = {
     })
   },
   add(req, res) {
-    return User
-      .create({
-        class_name: req.body.class_name,
-      })
+    console.log("Insert user");
+    console.log(JSON.stringify(req.body.user));
+    return User.create(
+        req.body.user
+      )
       .then((User) => res.status(201).send(user))
       .catch((error) => res.status(400).send(error));
   },

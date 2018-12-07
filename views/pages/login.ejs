@@ -1,3 +1,6 @@
+<script>
+    var isLogin = true;
+</script>
 <div  class="container-fuild bg-light pt-5 w-100 h-100 position-absolute">
        <div class="row text-center align-items-center h-100">
             <div class="col mx-auto">
@@ -8,23 +11,45 @@
                         </div>
                         <div class="login-form mt-4">
                             
-                            <div class="form-row">
+                            <div class="form-row login">
                                 <div class="form-group col-md-12">
-                                  <input id="user" name="user" placeholder="Email Address or Username" class="form-control" type="text">
+                                  <input id="user_login" name="user" placeholder="Email Address or Username" class="form-control" type="text">
                                 </div>
                                 <div class="form-group col-md-12">
-                                  <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                  <input id="password_login" type="password" name="password" class="form-control"  placeholder="Password">
                                 </div>
-                              </div>
+                            </div>
+
+                            <div class="form-row signup d-none">
+                                    <div class="form-group col-md-12">
+                                        <input id="firstname" name="firstname" placeholder="First Name" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <input id="lastname" name="lastname" placeholder="Last Name" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                      <input id="user" name="user" placeholder="Username" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <input id="email" name="email" placeholder="Email" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <input type="password" name="password" class="form-control" id="password2" placeholder="Retype your Password">
+                                    </div>
+                            </div>
+
                              <div class="form-row">
                           
                             </div>                        
                             
                             <div class="form-row">
                                 <button id="submit" type="button" class="btn btn-danger btn-block">Submit</button>
+                                <a id="changeLogin" href="#">Create a new user</a>
                             </div>
                             <div class="border-top mt-2 text-secondary">
-                                
                             </div>
                             <div class="form-row pt-2">
                                 <a href="/auth/facebook/" class="btn btn-block facebook_btn">
@@ -37,7 +62,6 @@
                                 </a>    
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -45,41 +69,77 @@
     </div>
        
         <script>
-                $(document).ready(function(){
-                  var user,pass;
 
+                  $("#changeLogin").click(function(){
+                    isLogin = !isLogin;
+                    if(isLogin){
+                        $(".login").removeClass("d-none");
+                        $(".signup").addClass("d-none");
+                        $('#submit').html("Login");
+                    } else {
+                        $(".login").addClass("d-none");
+                        $(".signup").removeClass("d-none");
+                        $('#submit').html("Create");
+                    }
+                  });
 
                   $("#submit").click(function(){
-                    user=$("#user").val();
-                    pass=$("#password").val();
+
                     $('#submit').prop('disabled', true);
                     $('#submit').html("Loading...");
                     $('#submit').addClass("pulse animated infinite");
                     
-                    
-                    $.post("/login",{username: user,password: pass}, function(data){
-                      if(data)
-                        {
-                            var status = JSON.stringify(data);
-                           
-                            if(data.status == "Success")
+                    if(isLogin){
+                        user=$("#user_login").val();
+                        pass=$("#password_login").val();
+                        $.post("/login",{username: user,password: pass}, function(data){
+                        if(data)
                             {
-                                window.location = "/";
-                            } else {
-                                $('#submit').removeClass("pulse animated infinite");
-                                $('#submit').prop('disabled', false);
-                                $('#submit').html("Submit");
-                                alert(data.message);
+                                var status = JSON.stringify(data);
+                                if(data.status == "Success")
+                                {
+                                    window.location = "/";
+                                } else {
+                                    $('#submit').removeClass("pulse animated infinite");
+                                    $('#submit').prop('disabled', false);
+                                    $('#submit').html("Login");
+                                    alert(data.message);
+                                }
+                            }else {
+                                alert("Error connect server")
                             }
-                            
-                        }else {
-                            alert("Error connect server")
-                        }
-                    });
+                        });
+                    } else {
+                        user = {
+                        user_firstname: $("#firstname").val(),
+                        user_lastname: $("#lastname").val(),
+                        username: $("#username").val(),
+                        user_email: $("#email").val(),
+                        userpw: $("#password").val()
+                        };
+                        $.post("/api/user",{user: user}, function(data){
+                        if(data)
+                            {
+                                var status = JSON.stringify(data);
+                                if(data.status == "Success")
+                                {
+                                    window.location = "/";
+                                } else {
+                                    $('#submit').removeClass("pulse animated infinite");
+                                    $('#submit').prop('disabled', false);
+                                    $('#submit').html("Create");
+                                    alert(data.message);
+                                }
+                            }else {
+                                alert("Error connect server")
+                            }
+                        });
 
+
+                    }
                   });
-
-                });
+                
+              
               </script>
 
               
