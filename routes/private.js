@@ -28,3 +28,16 @@ router.get('/contactlist', function(req, res, next) {
         res.redirect('/');
       }
 });
+
+
+router.get('/form', function(req, res, next) {
+  if(req.isAuthenticated()){
+      var photoPath = req.session.passport.user.photo;
+      res.render('index', { page: 'private/form',navbar: 'private/navbar', photoPath: photoPath });
+    } else {
+      res.redirect('/');
+    }
+});
+
+
+module.exports = router;

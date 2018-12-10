@@ -29,3 +29,8 @@
 .lateralMenu .list-group{
     
 }
+
+.bg-semitransparent{
+    background: RGBA(100,100,100,0.8) !important;
+}
+
